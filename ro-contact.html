@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work With Me — Robert Orzechowski</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0C;
+      --bg2: #141412;
+      --fg: #F0EDE6;
+      --muted: #7A7870;
+      --dim: #3A3A36;
+      --accent: #C8A96E;
+      --accent-dim: rgba(200,169,110,0.12);
+      --accent-border: rgba(200,169,110,0.25);
+      --border: rgba(240,237,230,0.08);
+      --serif: 'Playfair Display', Georgia, serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', system-ui, sans-serif;
+      --max: 1000px;
+      --pad: clamp(1.25rem, 6vw, 2.5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(14,14,12,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 var(--pad);
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      border: 1px solid var(--accent-border);
+      color: var(--accent) !important;
+      padding: .4rem 1rem;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-family: var(--mono);
+      transition: all .2s;
+    }
+    .nav-cta:hover { background: var(--accent-dim); }
+
+    /* ── MAIN LAYOUT ── */
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: clamp(4rem, 10vw, 7rem) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 780px) {
+      .page { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    /* ── LEFT COLUMN ── */
+    .label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .page-sub {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      max-width: 420px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 2rem;
+    }
+    .tab {
+      font-family: var(--mono);
+      font-size: .8rem;
+      padding: .5rem 1.1rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .2s;
+      background: transparent;
+    }
+    .tab.active {
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
+    }
+    .tab:hover:not(.active) { border-color: var(--dim); color: var(--fg); }
+
+    /* Form panels */
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    /* Form fields */
+    .field { margin-bottom: 1.25rem; }
+    .field label {
+      display: block;
+      font-size: .82rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: .5rem;
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      background: rgba(240,237,230,0.04);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: .75rem 1rem;
+      color: var(--fg);
+      font-family: var(--sans);
+      font-size: .9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color .2s;
+      appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--dim); }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus { border-color: var(--accent); }
+    .field textarea { resize: vertical; min-height: 110px; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A7870' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    .field select option { background: #1A1A17; color: var(--fg); }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 3px;
+      padding: .9rem 1.5rem;
+      font-family: var(--mono);
+      font-size: .85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity .2s;
+      margin-top: .5rem;
+    }
+    .submit-btn:hover { opacity: .85; }
+
+    .form-note {
+      font-size: .72rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      margin-top: .75rem;
+      text-align: center;
+    }
+    .form-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── RIGHT COLUMN ── */
+    .right-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .info-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+    }
+    .info-box-title {
+      font-weight: 500;
+      font-size: .9rem;
+      margin-bottom: 1.5rem;
+      color: var(--fg);
+    }
+
+    /* Steps */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .step-num {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--accent);
+      padding-top: .15rem;
+    }
+    .step-title { font-size: .88rem; font-weight: 500; margin-bottom: .25rem; }
+    .step-desc { font-size: .82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+    /* Email box */
+    .email-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem;
+    }
+    .email-box-title {
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: .5rem;
+    }
+    .email-box-addr {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--accent);
+    }
+    .email-box-note {
+      font-size: .78rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: .4rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Testimonial */
+    .testimonial-box {
+      border-left: 3px solid var(--accent);
+      background: var(--bg2);
+      border-radius: 0 6px 6px 0;
+      padding: 1.5rem 1.75rem;
+    }
+    .testimonial-text {
+      font-family: var(--serif);
+      font-size: .95rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: .75rem;
+    }
+    .testimonial-author {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--dim);
+      letter-spacing: .05em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem var(--pad);
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+    .footer-logo { font-family: var(--mono); font-size: .85rem; color: var(--accent); display: block; margin-bottom: .6rem; }
+    .footer-tagline { font-size: .8rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .footer-col h4 { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-family: var(--mono); margin-bottom: .9rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .82rem; color: var(--muted); font-family: var(--mono); transition: color .2s; }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-copy { font-size: .72rem; color: var(--dim); font-family: var(--mono); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); max-width: var(--max); margin-left: auto; margin-right: auto; padding-left: var(--pad); padding-right: var(--pad); }
+
+    @media (max-width: 580px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Robert Orzechowski</a>
+    <ul class="nav-links">
+      <li><a href="index.html#phases">The Offer</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#cta">No Decision</a></li>
+      <li><a href="ro-contact.html" class="nav-cta">Work With Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="page">
+
+  <!-- LEFT: form -->
+  <div>
+    <p class="label">Work with me</p>
+    <h1>Tell me about<br>the deal.</h1>
+    <p class="page-sub">
+      I take on a small number of clients at a time. Fill this out and I'll get back to you.
+    </p>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('verdict')">Verdict Session</button>
+      <button class="tab" onclick="switchTab('intervention')">Deal Intervention</button>
+    </div>
+
+    <!-- Panel: Verdict Session -->
+    <div class="form-panel active" id="panel-verdict">
+      <div class="field">
+        <label>Your name</label>
+        <input type="text" placeholder="Your name" />
+      </div>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Who is the buyer? (company, industry, size)</label>
+        <input type="text" placeholder="e.g., Mid-market SaaS, 200 employees, procurement involved" />
+      </div>
+      <div class="field">
+        <label>How long has it been stalled?</label>
+        <input type="text" placeholder="e.g., 3 weeks, 2 months..." />
+      </div>
+      <div class="field">
+        <label>What's the deal value? (ballpark is fine)</label>
+        <input type="text" placeholder="e.g., $50K, $200K ARR..." />
+      </div>
+      <div class="field">
+        <label>What happened — in your own words</label>
+        <textarea placeholder="Walk me through it. What was happening, when it changed, what you've tried since."></textarea>
+      </div>
+      <button class="submit-btn">Send it</button>
+      <p class="form-note">I read everything. No auto-replies. &nbsp;·&nbsp; <a href="#">Privacy Policy</a></p>
+    </div>
+
+    <!-- Panel: Deal Intervention -->
+    <div class="form-panel" id="panel-intervention">
+      <div class="field">
+        <label>Your name</label>
+        <input type="text" placeholder="Your name" />
+      </div>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Have you completed the Verdict Session?</label>
+        <select>
+          <option value="">Select one...</option>
+          <option>Yes — I know the deal is recoverable</option>
+          <option>Not yet — I'd like to start with Phase 1</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>What's the deal and where does it stand now?</label>
+        <textarea placeholder="Brief summary of the deal, what broke, and where you are after the verdict session."></textarea>
+      </div>
+      <div class="field">
+        <label>How urgent is this?</label>
+        <select>
+          <option value="">Select one...</option>
+          <option>Very — the window is closing fast</option>
+          <option>Moderate — a few weeks to act</option>
+          <option>Not urgent — want to start soon</option>
+        </select>
+      </div>
+      <button class="submit-btn">Send it</button>
+      <p class="form-note">I'll get back to you within 24 hours. &nbsp;·&nbsp; <a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+
+  <!-- RIGHT: info -->
+  <div class="right-col">
+
+    <div class="info-box">
+      <div class="info-box-title">What happens next?</div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">You fill out the form</div>
+            <p class="step-desc">Takes 2 minutes. Helps me understand the deal before we speak.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">I review and respond</div>
+            <p class="step-desc">Within 24 hours. If there's enough to work with, I'll send you a link to book the session directly. If I can't help or the deal isn't the right fit, I'll tell you.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">We find 90 minutes</div>
+            <p class="step-desc">One session. One deal. You leave with a verdict.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-box">
+      <div class="email-box-title">Prefer email?</div>
+      <div class="email-box-addr"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f5879a97908781b5908d9498859990db969a98">[email&#160;protected]</a></div>
+      <p class="email-box-note">Tell me the deal in one sentence. I read everything. No auto-replies.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="index.html" class="footer-logo">Robert Orzechowski</a>
+      <p class="footer-tagline">
+        Helping founder-operators find out if a stalled B2B deal is recoverable — and what broke.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html#phases">The Offer</a></li>
+        <li><a href="index.html#cta">No Decision</a></li>
+        <li><a href="ro-contact.html">Work With Me</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://x.com/WorksYournet" target="_blank">Twitter / X</a></li>
+        <li><a href="https://www.linkedin.com/in/robert-orzechowski-ab8a862aa/" target="_blank">LinkedIn</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#f7859895928583b7928f969a879b92d994989a">Email</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Robert Orzechowski. All rights reserved.</p>
+</footer>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
