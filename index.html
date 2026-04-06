@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robert Orzechowski — The Deal Verdict</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0E0E0C; --bg2: #141412; --bg3: #1A1A17;
+      --fg: #F0EDE6; --muted: #7A7870; --dim: #3A3A36;
+      --accent: #C8A96E; --accent-dim: rgba(200,169,110,0.12); --accent-border: rgba(200,169,110,0.25);
+      --red: #C0503A; --red-dim: rgba(192,80,58,0.1);
+      --border: rgba(240,237,230,0.08);
+      --serif: 'Geist', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', system-ui, sans-serif;
+      --max: 1100px; --pad: clamp(1.25rem, 6vw, 2.5rem);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 1rem; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(14,14,12,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 var(--pad); }
+    .nav-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+    .nav-logo { font-family: var(--mono); font-size: 0.95rem; font-weight: 500; letter-spacing: .05em; color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-size: 0.8rem; color: var(--muted); font-family: var(--mono); }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta { border: 1px solid var(--accent-border); color: var(--accent) !important; padding: .4rem 1rem; border-radius: 3px; font-size: 0.78rem; font-family: var(--mono); transition: all .2s; }
+    .nav-cta:hover { background: var(--accent-dim); }
+    section { padding: clamp(3rem, 7vw, 5rem) var(--pad); }
+    .inner { max-width: var(--max); margin: 0 auto; }
+    #hero { padding-top: clamp(3.5rem, 10vw, 6rem); padding-bottom: clamp(3rem, 7vw, 5rem); border-bottom: 1px solid var(--border); }
+    .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; display: flex; align-items: center; gap: .75rem; }
+    h1 { font-family: var(--serif); font-size: clamp(2.4rem, 7vw, 3.8rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 1.25rem; }
+    h1 em { font-style: normal; font-weight: 600; color: var(--fg); }
+    .hero-sub { font-size: 1.2rem; color: var(--muted); max-width: 700px; line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn { display: inline-flex; align-items: center; padding: .8rem 1.75rem; border-radius: 3px; font-size: 0.85rem; font-family: var(--mono); font-weight: 500; transition: all .2s; cursor: pointer; letter-spacing: .02em; }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { opacity: .88; }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { color: var(--fg); border-color: var(--dim); }
+    .stats-strip { display: flex; flex-wrap: wrap; gap: 0; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .stat-item { flex: 1; min-width: 160px; padding-right: 2rem; border-right: 1px solid var(--border); margin-right: 2rem; }
+    .stat-item:last-child { border-right: none; margin-right: 0; }
+    .stat-num { font-family: var(--serif); font-size: 2.2rem; font-weight: 400; line-height: 1; color: var(--accent); margin-bottom: .3rem; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); font-family: var(--mono); line-height: 1.5; }
+    h2 { font-family: var(--serif); font-size: clamp(1.8rem, 4.5vw, 2.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 1rem; }
+    h2 em { font-style: normal; font-weight: 600; color: var(--fg); }
+    .section-lead { font-size: 1rem; color: var(--muted); max-width: 950px; line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+    #problem { border-bottom: 1px solid var(--border); padding: var(--pad); }
+    #problem p { margin-bottom: 1rem; }
+    #phases { border-bottom: 1px solid var(--border); }
+    .phase-cards { display: grid; gap: 1.5rem; }
+    .phase-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; transition: border-color .2s; }
+    .phase-card:hover { border-color: var(--dim); }
+    .phase-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; gap: 1rem; }
+    .phase-tag { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--accent-border); padding: .3rem .75rem; border-radius: 2px; }
+    .phase-price { font-family: var(--mono); font-size: .85rem; color: var(--muted); text-align: right; }
+    .phase-price strong { display: block; font-size: 1.3rem; color: var(--fg); font-weight: 500; }
+    .phase-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; margin-bottom: .75rem; line-height: 1.3; }
+    .phase-desc { font-size: .9rem; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 1.5rem; }
+    .phase-details { display: grid; gap: .6rem; }
+    .phase-detail { display: flex; gap: .9rem; align-items: baseline; font-size: .85rem; color: var(--muted); }
+    .phase-detail::before { content: '→'; font-family: var(--mono); color: var(--accent); flex-shrink: 0; font-size: .75rem; }
+    .phase-divider { text-align: center; font-family: var(--mono); font-size: .7rem; color: var(--dim); letter-spacing: .1em; padding: .5rem 0; }
+    .proof-block { margin-top: 1.75rem; padding: 1.75rem 2rem; border-left: 3px solid var(--dim); background: var(--bg2); border-radius: 0 6px 6px 0; }
+    .proof-block p { font-size: .88rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
+    #not-for { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .not-list { list-style: none; margin-top: 1.5rem; }
+    .not-item { display: flex; gap: 1.25rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border); font-size: .9rem; align-items: baseline; padding: .85rem 0; }
+    .not-item:last-child { border-bottom: none; }
+    .not-x { font-family: var(--mono); color: var(--red); flex-shrink: 0; font-size: .8rem; }
+    .not-item span { color: var(--muted); font-weight: 300; }
+    .not-item strong { color: var(--fg); font-weight: 400; }
+    #why { border-bottom: 1px solid var(--border); }
+    .story-block { border-left: 1px solid var(--dim); padding-left: 2rem; margin-top: 1.75rem; }
+    .story-block p { font-size: .95rem; color: var(--muted); line-height: 1.85; font-weight: 300; margin-bottom: 1.1rem; }
+    .story-block p:last-child { margin-bottom: 0; }
+    .story-block strong { color: var(--fg); font-weight: 400; }
+    .story-block em { color: var(--fg); font-style: normal; font-weight: 500; }
+    #process { border-bottom: 1px solid var(--border); }
+    .steps { margin-top: 1.75rem; }
+    .step { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: .75rem; color: var(--accent); padding-top: .2rem; }
+    .step-title { font-weight: 500; font-size: .95rem; margin-bottom: .4rem; color: var(--fg); }
+    .step-desc { font-size: .88rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    #fit { border-bottom: 1px solid var(--border); }
+    .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 1.75rem; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    @media (max-width: 580px) { .fit-grid { grid-template-columns: 1fr; } }
+    .fit-cell { background: var(--bg2); padding: 1.5rem 1.75rem; }
+    .fit-cell-label { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .fit-cell-label.yes { color: var(--accent); }
+    .fit-cell-label.no { color: var(--red); }
+    .fit-list-inner { list-style: none; display: grid; gap: .65rem; }
+    .fit-list-inner li { font-size: .85rem; color: var(--muted); font-weight: 300; line-height: 1.55; display: flex; gap: .75rem; }
+    .fit-list-inner li .marker { flex-shrink: 0; font-family: var(--mono); font-size: .7rem; margin-top: .2rem; }
+    .fit-list-inner li.yes .marker { color: var(--accent); }
+    .fit-list-inner li.no .marker { color: var(--red); }
+    #cta { text-align: center; }
+    .cta-box { border: 1px solid var(--border); border-radius: 6px; padding: clamp(2rem, 5vw, 3rem); background: var(--bg2); max-width: 580px; margin: 0 auto; }
+    .cta-box h2 { margin-bottom: 1rem; }
+    .cta-box p { font-size: .95rem; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 2rem; }
+    .cta-note { margin-top: 1.25rem; font-size: .75rem; font-family: var(--mono); color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2.5rem var(--pad); }
+    .footer-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; align-items: start; }
+    @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+    .footer-logo { font-family: var(--mono); font-size: .85rem; color: var(--accent); }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; font-size: .78rem; font-family: var(--mono); color: var(--muted); }
+    .footer-links a:hover { color: var(--fg); }
+    .footer-copy { font-size: .72rem; color: var(--dim); font-family: var(--mono); width: 100%; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    #faq { border-bottom: 1px solid var(--border); }
+    .faq-list { margin-top: 1.75rem; }
+    .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { font-weight: 500; font-size: .95rem; color: var(--fg); margin-bottom: .6rem; }
+    .faq-a { font-size: .88rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .fade { opacity: 0; animation: fadeUp .65s ease forwards; }
+    .d1{animation-delay:.05s} .d2{animation-delay:.15s} .d3{animation-delay:.27s} .d4{animation-delay:.38s} .d5{animation-delay:.5s}
+    @media (max-width: 580px) {
+      .nav-links { display: none; }
+      .stats-strip { gap: 1.5rem; flex-direction: column; }
+      .stat-item { border-right: none; margin-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">Robert Orzechowski</span>
+    <ul class="nav-links">
+      <li><a href="#phases">The Offer</a></li>
+      <li><a href="#why">Why Me</a></li>
+      <li><a href="#fit">Fit</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#cta">No Decision</a></li>
+      <li><a href="ro-contact.html" class="nav-cta">Work With Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="inner">
+    <p class="label fade d1">For founders personally running high-value B2B deals</p>
+    <h1 class="fade d2">You've earned this deal.<br>Find out what stopped it.</h1>
+    <p class="hero-sub fade d3">Nothing is clearly wrong, but nothing is moving. I look at one specific deal with you and tell you the truth: alive or over, what broke, and what to do next. Either way, you stop guessing.</p>
+    <div class="btn-row fade d4">
+      <a href="ro-contact.html" class="btn btn-primary">Get the Verdict — $1,000</a>
+      <a href="#phases" class="btn btn-ghost">See how it works</a>
+    </div>
+    <div class="stats-strip fade d5">
+      <div class="stat-item"><div class="stat-num">90 min</div><div class="stat-label">One deal.<br>One session.</div></div>
+      <div class="stat-item"><div class="stat-num">$1K</div><div class="stat-label">Flat fee.<br>Refund if no verdict.</div></div>
+      <div class="stat-item"><div class="stat-num">24 hrs</div><div class="stat-label">Response time<br>after you reach out.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="inner">
+    <p class="label">The specific problem</p>
+    <h2>Your champion had influence, not ownership.</h2>
+    <p>At some point the deal felt real. The conversations were good. Your champion was engaged. Then it stopped — no rejection, no clear objection. Just silence.</p>
+    <p>The reason is almost always the same: the person you were talking to wanted it, but never owned the decision. By the time that becomes visible, weeks of time and pipeline confidence are already gone.</p>
+  </div>
+</section>
+
+<section id="phases">
+  <div class="inner">
+    <p class="label">The offer</p>
+    <h2>Two phases. A real decision.</h2>
+    <p class="section-lead">Phase 1 gives you the verdict. Phase 2 executes the move. You don't have to commit to both, but Phase 2 only follows from Phase 1.</p>
+    <div class="phase-cards">
+      <div class="phase-card">
+        <div class="phase-header">
+          <span class="phase-tag">Phase 1</span>
+          <div class="phase-price"><strong>$1,000</strong>flat fee</div>
+        </div>
+        <div class="phase-title">The Verdict Session</div>
+        <p class="phase-desc">90 minutes. One stalled deal. A straight answer. By the end of the session you know whether the deal still has a decision on the other side, exactly where it broke, and the single highest-leverage move available to you right now. You leave with a verdict, not a framework.</p>
+        <div class="phase-details">
+          <div class="phase-detail">Remote. 90 minutes. One deal.</div>
+          <div class="phase-detail">Nothing required in advance except the deal itself.</div>
+          <div class="phase-detail">If you don't get a clear verdict, I extend or refund. No ambiguity.</div>
+          <div class="phase-detail">Still worth it or not. What broke. What to do next.</div>
+        </div>
+      </div>
+      <div class="phase-divider">↓ &nbsp; If the deal has a path forward, that's Phase 2</div>
+      <div class="phase-card">
+        <div class="phase-header">
+          <span class="phase-tag">Phase 2</span>
+          <div class="phase-price"><strong>$5,000</strong>until decision</div>
+        </div>
+        <div class="phase-title">The Deal Intervention</div>
+        <p class="phase-desc">Working sessions until the deal reaches a decision. Twice a week. Live deal. Direct access between sessions. The engagement ends when the deal closes or reaches a clear no — not when a calendar date arrives.</p>
+        <div class="phase-details">
+          <div class="phase-detail">Twice-weekly sessions, 45–60 minutes each.</div>
+          <div class="phase-detail">Direct access for anything time-sensitive between sessions.</div>
+          <div class="phase-detail">Ends at a real decision, not a fixed date.</div>
+          <div class="phase-detail">Requires Phase 1 first. We don't start without a verdict.</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-block">
+      <p>No published case studies yet. If you want to speak to someone I've worked with before booking, ask and I'll make that happen.</p>
+    </div>
+  </div>
+</section>
+
+<section id="not-for">
+  <div class="inner">
+    <p class="label">What this isn't</p>
+    <h2>I don't do any of this.</h2>
+    <p class="section-lead">If what you need is one of these, I'm not the right person. I'd rather tell you now than waste 90 minutes finding out.</p>
+    <ul class="not-list">
+      <li class="not-item"><span class="not-x">✕</span><span><strong>Pipeline audits or CRM reviews.</strong> I work inside one live deal at a time, at the moment it matters most.</span></li>
+      <li class="not-item"><span class="not-x">✕</span><span><strong>Sales process redesigns or methodology training.</strong> You don't need a framework. You need a verdict on this specific deal.</span></li>
+      <li class="not-item"><span class="not-x">✕</span><span><strong>Reassurance.</strong> If you bring a deal to this session, you'll get a straight verdict, and sometimes that verdict is that it's already over and you should stop carrying it.</span></li>
+      <li class="not-item"><span class="not-x">✕</span><span><strong>Early-stage deals without a pattern.</strong> If the deal doesn't have at least three or four real conversations with the buyer, there's not enough to work with.</span></li>
+      <li class="not-item"><span class="not-x">✕</span><span><strong>General growth advice.</strong> I work in one live deal — not in your business strategy, your positioning, or your go-to-market.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="why">
+  <div class="inner">
+    <p class="label">Why me</p>
+    <h2>I lost a deal exactly like yours.</h2>
+    <div class="story-block">
+      <p>It looked completely real. Multiple strong conversations. An engaged champion. A clear problem. The feeling that it was just a matter of time. Then it slowed down. Replies got shorter. Meetings got harder to schedule. I kept pushing forward, more follow-ups, more information, more attempts to create next steps.</p>
+      <p>What I didn't know was that <strong>I was speaking to someone who wanted it but wasn't responsible for making it happen.</strong> By the time I figured that out, the deal was already over, not formally lost, just finished. What it cost me wasn't just the deal. It was the weeks of time, attention, and false confidence in a pipeline number that wasn't real.</p>
+      <p>That experience taught me to look at one specific thing: <strong>whether decision ownership actually exists on the buyer's side, and where it disappeared.</strong> That's the pattern I've been paying attention to ever since and it's the one thing that most deal reviews never surface.</p>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="inner">
+    <p class="label">What actually happens</p>
+    <h2>What I'm listening for in those 90 minutes.</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><div><div class="step-title">You walk me through the deal as it stands</div><p class="step-desc">The conversations you've had, the people you've spoken to, where it was tracking and when it changed. No prep required. Just bring the deal.</p></div></div>
+      <div class="step"><span class="step-num">02</span><div><div class="step-title">I listen for four specific things</div><p class="step-desc">Who actually owns the decision on the buyer's side. Where momentum stopped and what was happening at that moment. What risk is still unresolved inside their organisation. Whether there's a next step with a real owner, or just an open conversation with no one responsible for closing it.</p></div></div>
+      <div class="step"><span class="step-num">03</span><div><div class="step-title">You get a verdict</div><p class="step-desc">The deal still has a path forward - here's what broke and here's the one move. Or the deal is already over - here's where it actually stalled and why continuing to push it is costing you more than closing the file.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fit">
+  <div class="inner">
+    <p class="label">Who this is for</p>
+    <h2>You're the right person if this is already true.</h2>
+    <p class="section-lead">I'm selective about what I take on, because this only works when the deal has enough history to work with.</p>
+    <div class="fit-grid">
+      <div class="fit-cell">
+        <div class="fit-cell-label yes">✓ &nbsp; This is for you</div>
+        <ul class="fit-list-inner">
+          <li class="yes"><span class="marker">→</span> You're the founder personally running the deal — not managing a team that is.</li>
+          <li class="yes"><span class="marker">→</span> The deal is high-value — one number that changes your quarter.</li>
+          <li class="yes"><span class="marker">→</span> It was tracking well before it went quiet</li>
+          <li class="yes"><span class="marker">→</span> You've already tried the obvious things and none of it gave you clarity</li>
+          <li class="yes"><span class="marker">→</span> You'd rather know the truth than carry it another month.</li>
+        </ul>
+      </div>
+      <div class="fit-cell">
+        <div class="fit-cell-label no">✕ &nbsp; This is not for you</div>
+        <ul class="fit-list-inner">
+          <li class="no"><span class="marker">→</span> You want reassurance the deal is probably fine</li>
+          <li class="no"><span class="marker">→</span> The deal has fewer than three or four substantive buyer interactions</li>
+          <li class="no"><span class="marker">→</span> You're a sales leader managing a team — not the founder personally.</li>
+          <li class="no"><span class="marker">→</span> You want general pipeline methodology or sales process improvement</li>
+          <li class="no"><span class="marker">→</span> You're not willing to act on what you find out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="inner">
+    <p class="label">Common questions</p>
+    <h2>What people ask before they book.</h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Who is this for exactly?</div><div class="faq-a">Founders personally running a high-value B2B deal who can't get a straight answer on where it stands. Not sales leaders managing a team. Not early-stage deals without a pattern.</div></div>
+      <div class="faq-item"><div class="faq-q">What counts as a "high-value" deal?</div><div class="faq-a">The number that makes 90 minutes worth it. Usually a deal that changes your quarter or your year. No fixed threshold — but if the outcome either way wouldn't change much, this probably isn't the right tool.</div></div>
+      <div class="faq-item"><div class="faq-q">What do I need to bring to the session?</div><div class="faq-a">Nothing prepared in advance. Just the deal — the conversations, the people, where it was tracking and when it changed. Minimum three or four real interactions with the buyer. If it's too early to have a pattern, the session won't work yet.</div></div>
+      <div class="faq-item"><div class="faq-q">What if the verdict is that the deal is already over?</div><div class="faq-a">Then that's what I'll tell you. That's exactly what this session is for — and it's the outcome that most founders are actually afraid to find out. Knowing the deal is no longer active isn't a failure. It's the end of weeks of false confidence, misallocated attention, and a forecast number that isn't real. A clear no is worth more than six more months of drift.</div></div>
+      <div class="faq-item"><div class="faq-q">How is this different from a sales consultant or advisor?</div><div class="faq-a">I don't build pipelines, redesign sales processes, or offer general growth advice. I work inside one live deal at the moment it matters most. I'm listening for one specific pattern that explains almost every stalled deal I've looked at: whether decision ownership exists on the buyer's side and where it disappeared. That's a narrow focus, and it's intentional.</div></div>
+      <div class="faq-item"><div class="faq-q">What's the refund policy?</div><div class="faq-a">If you go through the session and don't feel you got a clear verdict, tell me. I'll either extend the time or refund it. I'm not interested in charging for ambiguity — that's the problem you came with.</div></div>
+      <div class="faq-item"><div class="faq-q">What happens after Phase 1 if I want to keep going?</div><div class="faq-a">If the deal has a path forward and you want to execute the move rather than figure it out alone, that's Phase 2. We work the deal together twice a week until it reaches a real decision — closed or clearly over. Phase 2 is $5,000 and starts directly from the verdict session. If it doesn't, Phase 2 doesn't apply.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="inner">
+    <div class="cta-box">
+      <p class="label" style="justify-content:center;">Ready to find out</p>
+      <h2>Tell me the deal<br>in one sentence.</h2>
+      <p>Reply with one sentence describing the deal.<br>I'll get back to you within 24 hours.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="ro-contact.html" class="btn btn-primary">Book the Verdict Session →</a>
+        <a href="#cta" class="btn btn-ghost">Read No Decision →</a>
+      </div>
+      <p class="cta-note">$1,000. 90 minutes. Refund if no verdict.</p>
+      <p style="margin-top:1.5rem; font-size:.78rem; color:var(--muted); font-family:var(--mono);">
+        Prefer email? <a href="/cdn-cgi/l/email-protection#d7a3a0b8bd97b2bab6bebbf9b4b8ba" style="color:var(--accent); text-decoration:underline; text-underline-offset:3px;"><span class="__cf_email__" data-cfemail="5d292a32371d38303c3431733e3230">[email&#160;protected]</span></a> — I read everything.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <span class="footer-logo">Robert Orzechowski</span>
+      <p style="font-size:.8rem; color:var(--muted); margin-top:.6rem; font-family:var(--sans); font-weight:300; line-height:1.6; max-width:220px;">Helping founder-operators find out if a stalled B2B deal is recoverable — and what broke.</p>
+    </div>
+    <ul class="footer-links" style="flex-direction:column; gap:.75rem; align-items:flex-start;">
+      <li style="font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); font-family:var(--mono);">Pages</li>
+      <li><a href="#phases">The Offer</a></li>
+      <li><a href="#cta">No Decision</a></li>
+      <li><a href="#cta">Work With Me</a></li>
+    </ul>
+    <ul class="footer-links" style="flex-direction:column; gap:.75rem; align-items:flex-start;">
+      <li style="font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); font-family:var(--mono);">Connect</li>
+      <li><a href="https://x.com/WorksYournet" target="_blank">Twitter / X</a></li>
+      <li><a href="https://www.linkedin.com/in/robert-orzechowski-ab8a862aa/" target="_blank">LinkedIn</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#5d292a323
